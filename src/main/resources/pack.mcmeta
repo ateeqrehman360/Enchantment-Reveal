@@ -1,7 +1,6 @@
 {
   "pack": {
-    "description": "enchantment_reveal resources",
-    "pack_format": 18,
-    "forge:server_data_pack_format": 12
+    "description": "Enchantment Reveal resources",
+    "pack_format": 18
   }
 }

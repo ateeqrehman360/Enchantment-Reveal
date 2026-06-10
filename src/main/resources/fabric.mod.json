@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "enchantment_reveal",
+  "version": "${version}",
+  "name": "Enchantment Reveal",
+  "description": "Reveals enchantments before selecting them at the enchanting table.",
+  "authors": [
+    "CrownSheep"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.crownsheep.enchantment_reveal.EnchantmentReveal"
+    ]
+  },
+  "mixins": [
+    "enchantment_reveal.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "26.1.2",
+    "java": ">=25"
+  }
+}

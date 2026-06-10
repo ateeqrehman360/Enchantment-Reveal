@@ -2,12 +2,9 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.crownsheep.enchantment_reveal.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "refmap": "enchantment_reveal.refmap.json",
-  "mixins": [
-
-  ],
+  "compatibilityLevel": "JAVA_25",
   "client": [
+    "EnchantmentMenuInvoker",
     "EnchantmentScreenMixin"
   ],
   "injectors": {
