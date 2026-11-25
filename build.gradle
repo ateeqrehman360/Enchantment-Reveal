@@ -1,6 +1,5 @@
 plugins {
     id 'net.fabricmc.fabric-loom' version "${loom_version}"
-    id 'maven-publish'
 }
 
 version = project.mod_version
@@ -10,12 +9,9 @@ base {
     archivesName = project.archives_base_name
 }
 
-repositories {
-}
-
 loom {
     mods {
-        "enchantment_reveal" {
+        enchantment_reveal {
             sourceSet sourceSets.main
         }
     }
@@ -25,7 +21,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    implementation fabricApi.module('fabric-networking-api-v1', project.fabric_api_version)
 }
 
 processResources {
@@ -40,14 +36,11 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
-    it.options.release = 25
 }
 
 java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
-
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
@@ -58,4 +51,25 @@ jar {
     from("LICENSE") {
         rename { "${it}_${projectName}" }
     }
+}
+
+sourceSets {
+    verification {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
+tasks.register('verifyOfferPreview', JavaExec) {
+    dependsOn tasks.named('verificationClasses')
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'net.crownsheep.enchantment_reveal.OfferPreviewCheck'
+    doFirst {
+        workingDir = temporaryDir
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyOfferPreview')
 }

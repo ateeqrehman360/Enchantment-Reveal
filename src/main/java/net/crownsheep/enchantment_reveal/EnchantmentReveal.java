@@ -1,15 +1,11 @@
 package net.crownsheep.enchantment_reveal;
 
-import net.fabricmc.api.ClientModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
-public class EnchantmentReveal implements ClientModInitializer {
-    public static final String MOD_ID = "enchantment_reveal";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
+public class EnchantmentReveal implements ModInitializer {
     @Override
-    public void onInitializeClient() {
-        LOGGER.info("Enchantment Reveal initialized");
+    public void onInitialize() {
+        PayloadTypeRegistry.clientboundPlay().register(OfferPreview.TYPE, OfferPreview.STREAM_CODEC);
     }
 }
